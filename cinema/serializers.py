@@ -20,9 +20,15 @@ class ActorSerializer(serializers.ModelSerializer):
 
 
 class CinemaHallSerializer(serializers.ModelSerializer):
+    capacity = serializers.SerializerMethodField()
+
     class Meta:
         model = CinemaHall
         fields = ["id", "name", "rows", "seats_in_row", "capacity"]
+
+    def get_capacity(self, obj):
+        # Вычисляем емкость (количество мест) в зале
+        return obj.rows * obj.seats_in_row
 
 
 class MovieListSerializer(serializers.ModelSerializer):
